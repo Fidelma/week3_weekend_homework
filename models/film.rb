@@ -64,6 +64,15 @@ class Film
     SqlRunner.run(sql)
   end
 
+  def num_of_people
+    sql = "SELECT * FROM tickets
+    WHERE film_id = $1"
+    values = [@id]
+    results = SqlRunner.run(sql, values)
+    results_array = results.map { |ticket| Ticket.new(ticket)}
+    return results_array.length
+  end 
+
 
 
 end
