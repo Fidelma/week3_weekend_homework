@@ -9,7 +9,7 @@ customer1 = Customer.new({
   'funds' => 20
   })
 
-  customer1.save()
+  # customer1.save()
 
   binding.pry
   nil
