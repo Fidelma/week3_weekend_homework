@@ -1,4 +1,5 @@
 require_relative('../db/sql_runner')
+require_relative('film')
 
 
 class Customer
@@ -31,6 +32,27 @@ class Customer
     SqlRunner.run(sql, values)
   end
 
+  def update()
+    sql = "UPDATE customers SET
+    (
+      name,
+      funds
+    )
+    = ($1, $2)
+    WHERE id = $3"
+    values = [@name, @funds, @id]
+    SqlRunner.run(sql, values)
+  end
+
+  def films()
+    sql = "SELECT films.* FROM films
+    INNER JOIN tickets
+    ON tickets.film_id = films.id
+    WHERE tickets.customer_id = $1"
+    values = [@id]
+    results = SqlRunner.run(sql, values)
+    return results.map { |film| Film.new(film) }
+  end
 
   def self.all()
     sql = "SELECT * FROM customers"
@@ -41,18 +63,6 @@ class Customer
   def self.delete_all()
     sql = "DELETE FROM customers"
     SqlRunner.run(sql)
-  end
-
-  def update()
-    sql = "UPDATE customers SET
-    (
-      name,
-      funds
-      )
-      = ($1, $2)
-      WHERE id = $3"
-      values = [@name, @funds, @id]
-      SqlRunner.run(sql, values)
   end
 
 
