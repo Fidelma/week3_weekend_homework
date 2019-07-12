@@ -47,7 +47,9 @@ class Film
     sql = "SELECT customers.* FROM customers
     INNER JOIN tickets
     ON tickets.customer_id = customers.id
-    WHERE tickets.film_id = $1"
+    INNER JOIN screenings
+    ON tickets.screening_id = screenings.id
+    WHERE screenings.film_id = $1"
     values = [@id]
     results = SqlRunner.run(sql, values)
     return results.map { |customer| Customer.new(customer) }
@@ -71,7 +73,17 @@ class Film
     results = SqlRunner.run(sql, values)
     results_array = results.map { |ticket| Ticket.new(ticket)}
     return results_array.length
-  end 
+  end
+
+  def tickets
+    sql = "SELECT tickets.* FROM tickets
+    INNER JOIN screenings
+    ON screenings.film_id = screenings.id
+    WHERE screenings.film_id = $1"
+    values = [@id]
+    results = SqlRunner.run(sql, values)
+    return results.map { |ticket| Ticket.new(ticket) }
+  end
 
 
 
