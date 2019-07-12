@@ -65,5 +65,10 @@ class Customer
     SqlRunner.run(sql)
   end
 
+  def buy_tickets(film)
+    @funds -= film['price']
+    update 
+  end
+
 
 end
