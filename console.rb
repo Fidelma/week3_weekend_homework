@@ -44,8 +44,8 @@ customer2.save()
   ticket1.save()
 
   ticket2 = Ticket.new({
-    'customer_id' => customer2.id,
-    'film_id' => film1.id
+    'customer_id' => customer1.id,
+    'film_id' => film2.id
     })
 
   ticket2.save()

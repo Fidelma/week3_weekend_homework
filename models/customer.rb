@@ -67,7 +67,16 @@ class Customer
 
   def buy_tickets(film)
     @funds -= film.price
-    update 
+    update
+  end
+
+  def num_of_tickets
+    sql = "SELECT * FROM tickets
+    WHERE customer_id = $1"
+    values = [@id]
+    results = SqlRunner.run(sql, values)
+    results_array = results.map { |ticket| Ticket.new(ticket)}
+    return results_array.length
   end
 
 
