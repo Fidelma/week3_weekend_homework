@@ -66,7 +66,7 @@ class Customer
   end
 
   def buy_tickets(film)
-    @funds -= film['price']
+    @funds -= film.price
     update 
   end
 
