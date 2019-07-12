@@ -80,7 +80,7 @@ class Film
   def tickets
     sql = "SELECT tickets.* FROM tickets
     INNER JOIN screenings
-    ON screenings.film_id = screenings.id
+    ON tickets.screening_id = screenings.id
     WHERE screenings.film_id = $1"
     values = [@id]
     results = SqlRunner.run(sql, values)
