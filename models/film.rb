@@ -67,7 +67,9 @@ class Film
   end
 
   def num_of_people
-    sql = "SELECT * FROM tickets
+    sql = "SELECT tickets.* FROM tickets
+    INNER JOIN screenings
+    ON tickets.screening_id = screenings.id
     WHERE film_id = $1"
     values = [@id]
     results = SqlRunner.run(sql, values)
