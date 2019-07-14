@@ -89,7 +89,7 @@ class Customer
   def buy_ticket(film, time)
     found_film = find_film(film)
     screening = find_screening(film, time)
-    if screening.num_of_tickets < 10
+    if screening.num_of_tickets < screening.capacity && @funds > found_film.price
       ticket = Ticket.new({
         'customer_id' => @id,
         'screening_id' => screening.id
@@ -97,9 +97,13 @@ class Customer
         ticket.save()
       @funds -= found_film.price
       update
+      result = "Thank you for your purchase"
+    elsif @funds < found_film.price
+      result = "Sorry, insufficient fund for this purchase"
     else
-      return "Sorry, this screening is sold out"
+      result = "Sorry, this screening is sold out"
     end
+    return result
   end
 
   def num_of_tickets

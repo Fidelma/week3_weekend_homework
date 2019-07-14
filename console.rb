@@ -24,6 +24,13 @@ customer2 = Customer.new({
 
 customer2.save()
 
+customer3 = Customer.new({
+  'name' => 'Harry',
+  'funds' => 1000
+  })
+
+customer2.save()
+
   film1 = Film.new({
     'title' => 'John Wick',
     'price' => 7
@@ -40,28 +47,32 @@ customer2.save()
 
   screening1 = Screening.new({
     'film_id' => film1.id,
-    'timing' => '22:00'
+    'timing' => '22:00',
+    'capacity' => 20
     })
 
   screening1.save()
 
   screening2 = Screening.new({
     'film_id' => film1.id,
-    'timing' => '20:00'
+    'timing' => '20:00',
+    'capacity' => 10
     })
 
   screening2.save()
 
   screening3 = Screening.new({
     'film_id' => film1.id,
-    'timing' => '10:00'
+    'timing' => '10:00',
+    'capacity' => 30
     })
 
   screening3.save()
 
   screening4 = Screening.new({
     'film_id' => film2.id,
-    'timing' => '10:00'
+    'timing' => '10:00',
+    'capacity' => 20
     })
 
   screening4.save()
