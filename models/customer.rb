@@ -67,8 +67,32 @@ class Customer
     SqlRunner.run(sql)
   end
 
-  def buy_tickets(film)
-    @funds -= film.price
+  def find_film(film)
+    sql = "SELECT * FROM films
+    WHERE title = $1"
+    values = [film]
+    results = SqlRunner.run(sql, values).first
+    return Film.new(results)
+  end
+
+  def find_screening(film, screening)
+    film = find_film(film)
+    sql = "SELECT * FROM screenings
+    WHERE film_id = $1 and timing = $2"
+    values = [film.id, screening]
+    result = SqlRunner.run(sql, values).first
+    return Screening.new(result)
+  end
+
+  def buy_ticket(film, time)
+    found_film = find_film(film)
+    screening = find_screening(film, time)
+    ticket = Ticket.new({
+      'customer_id' => @id,
+      'screening_id' => screening.id
+      })
+      ticket.save()
+    @funds -= found_film.price
     update
   end
 
