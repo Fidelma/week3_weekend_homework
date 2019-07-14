@@ -55,16 +55,6 @@ class Film
     return results.map { |customer| Customer.new(customer) }
   end
 
-  def self.all()
-    sql = "SELECT * FROM films"
-    results = SqlRunner.run(sql)
-    return results.map { |film| Film.new(film)}
-  end
-
-  def self.delete_all()
-    sql = "DELETE FROM films"
-    SqlRunner.run(sql)
-  end
 
   def num_of_people
     sql = "SELECT tickets.* FROM tickets
@@ -104,6 +94,16 @@ class Film
     return most_popular_time.timing
   end
 
+  def self.all()
+    sql = "SELECT * FROM films"
+    results = SqlRunner.run(sql)
+    return results.map { |film| Film.new(film)}
+  end
+
+  def self.delete_all()
+    sql = "DELETE FROM films"
+    SqlRunner.run(sql)
+  end
 
 
 end

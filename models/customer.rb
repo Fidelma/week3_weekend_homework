@@ -1,5 +1,7 @@
 require_relative('../db/sql_runner')
 require_relative('film')
+require_relative('screening')
+require_relative('ticket')
 
 
 class Customer
@@ -87,13 +89,17 @@ class Customer
   def buy_ticket(film, time)
     found_film = find_film(film)
     screening = find_screening(film, time)
-    ticket = Ticket.new({
-      'customer_id' => @id,
-      'screening_id' => screening.id
-      })
-      ticket.save()
-    @funds -= found_film.price
-    update
+    if screening.num_of_tickets < 10
+      ticket = Ticket.new({
+        'customer_id' => @id,
+        'screening_id' => screening.id
+        })
+        ticket.save()
+      @funds -= found_film.price
+      update
+    else
+      return "Sorry, this screening is sold out"
+    end
   end
 
   def num_of_tickets
